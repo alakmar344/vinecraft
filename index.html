@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a3a6a">
+    <title>Vinecraft — Ultra-Realistic Voxel World</title>
+    <meta name="description" content="Vinecraft — A high-quality, ultra-realistic browser Minecraft-like game. No install required.">
+
+    <!-- Google Font for pixel-art style -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+
+    <!-- Game styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════ LOADING SCREEN ═══════════════════ -->
+<div id="loading-screen">
+    <div class="logo">VINECRAFT</div>
+    <div id="loading-text">Initialising engine…</div>
+    <div class="progress-bar-wrap">
+        <div id="loading-progress"></div>
+    </div>
+    <div class="loading-tips">
+        <p>💡 WASD to move · Mouse to look · Left-click to break · Right-click to place</p>
+        <p>💡 E to open inventory · F to toggle fly · 1-9 to select hotbar</p>
+        <p>💡 Works on any device — touch controls available on mobile!</p>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════ GAME CANVAS ══════════════════════ -->
+<div id="game-canvas"></div>
+
+<!-- ═══════════════════════════════════ HUD ══════════════════════════════ -->
+<div id="hud">
+
+    <!-- Crosshair -->
+    <div id="crosshair"></div>
+
+    <!-- Top-left info -->
+    <div id="top-left">
+        <div id="coords">X:0 Y:80 Z:0</div>
+        <div id="time-display">06:00</div>
+        <div id="weather-display">☀</div>
+        <div id="biome-display">Biome: Plains</div>
+        <div id="fps-display">-- fps</div>
+    </div>
+
+    <!-- Top-right controls hint -->
+    <div id="controls-hint">
+        <div>WASD — Move</div>
+        <div>Mouse — Look</div>
+        <div>Left click — Break</div>
+        <div>Right click — Place</div>
+        <div>1-9 — Hotbar</div>
+        <div>Scroll — Change slot</div>
+        <div>E — Inventory</div>
+        <div>F — Toggle fly</div>
+        <div>Space — Jump</div>
+        <div>Shift — Sprint</div>
+        <div>Esc — Pause</div>
+    </div>
+
+    <!-- Bottom HUD: health, hunger, hotbar -->
+    <div id="bottom-hud">
+        <div id="break-progress">
+            <div id="block-name"></div>
+            <div id="break-bar-wrap"><div id="break-bar"></div></div>
+        </div>
+        <div id="status-bars">
+            <div id="health-bar"></div>
+            <div id="hunger-bar"></div>
+        </div>
+        <div id="hotbar"></div>
+    </div>
+
+    <!-- Tooltip -->
+    <div id="tooltip"></div>
+
+</div><!-- end #hud -->
+
+<!-- ═══════════════════════════════════ FLASH OVERLAY ════════════════════ -->
+<div id="flash-overlay"></div>
+
+<!-- ═══════════════════════════════════ INVENTORY ════════════════════════ -->
+<div id="inventory-panel"></div>
+
+<!-- ═══════════════════════════════════ PAUSE MENU ═══════════════════════ -->
+<div id="pause-menu">
+    <h1>VINECRAFT</h1>
+    <button class="menu-btn" onclick="UI.closeAll(); Game.getInstance().player.lock()">▶ Resume</button>
+    <button class="menu-btn" onclick="UI.toggleInventory()">🎒 Inventory</button>
+    <button class="menu-btn" onclick="location.reload()" class="danger">↺ New World</button>
+    <button class="menu-btn danger" onclick="location.reload()">✕ Quit to Title</button>
+    <div style="margin-top:16px;font-size:9px;color:#666;">
+        Vinecraft v1.0 — © 2026 AL-Aqmar Tinwala — MIT License
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════ MOBILE CONTROLS ══════════════════ -->
+<div id="mobile-controls">
+    <div class="mobile-btn" id="btn-jump" ontouchstart="Game.getInstance().player.velocity.y=8;Game.getInstance().player.onGround=false">⬆</div>
+    <div class="mobile-btn" id="btn-fly"  ontouchstart="Game.getInstance().player.flying=!Game.getInstance().player.flying">✈</div>
+    <div class="mobile-btn" id="btn-inv"  ontouchstart="UI.toggleInventory()">🎒</div>
+    <div class="mobile-btn" id="btn-break"
+         ontouchstart="Game.getInstance()._mouseLeft=true"
+         ontouchend="Game.getInstance()._mouseLeft=false">⛏</div>
+    <div class="mobile-btn" id="btn-place"
+         ontouchstart="Game.getInstance()._mouseRight=true"
+         ontouchend="Game.getInstance()._mouseRight=false">🪨</div>
+</div>
+
+<!-- ═══════════════════════════════════ SCRIPTS ══════════════════════════ -->
+
+<!-- Three.js via CDN (global build, no install required) -->
+<script src="https://unpkg.com/three@0.155.0/build/three.min.js"></script>
+
+<!-- Game modules (order matters) -->
+<script src="js/noise.js"></script>
+<script src="js/blocks.js"></script>
+<script src="js/textures.js"></script>
+<script src="js/chunk.js"></script>
+<script src="js/world.js"></script>
+<script src="js/player.js"></script>
+<script src="js/inventory.js"></script>
+<script src="js/crafting.js"></script>
+<script src="js/sky.js"></script>
+<script src="js/weather.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/game.js"></script>
+
+<!-- Bootstrap -->
+<script>
+window.addEventListener('load', function () {
+    // Small delay so loading screen renders first
+    setTimeout(function () {
+        try {
+            var game = Game.create();
+            game.init();
+        } catch (err) {
+            console.error('Vinecraft failed to start:', err);
+            document.getElementById('loading-text').textContent =
+                'Error: ' + err.message + ' — Try refreshing!';
+        }
+    }, 100);
+});
+</script>
+</body>
+</html>
