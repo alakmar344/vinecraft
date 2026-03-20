@@ -103,25 +103,27 @@ var Player = (function () {
                     if (!blockIsSolid(id)) continue;
 
                     // Overlap on each axis
+                    // overlapNX/NY/NZ = how much the player's leading edge has entered the block
+                    // overlapPX/PY/PZ = how much the player's trailing edge has entered the block
                     if (axis === 'x') {
                         var overlapPX = (bx + 1) - minX;
                         var overlapNX = maxX - bx;
-                        if (this.velocity.x > 0) { this.position.x -= overlapPX; this.velocity.x = 0; }
-                        else if (this.velocity.x < 0) { this.position.x += overlapNX; this.velocity.x = 0; }
+                        if (this.velocity.x > 0) { this.position.x -= overlapNX; this.velocity.x = 0; }
+                        else if (this.velocity.x < 0) { this.position.x += overlapPX; this.velocity.x = 0; }
                     } else if (axis === 'y') {
                         var overlapPY = (by + 1) - minY;
                         var overlapNY = maxY - by;
-                        if (this.velocity.y > 0) { this.position.y -= overlapPY; this.velocity.y = 0; }
+                        if (this.velocity.y > 0) { this.position.y -= overlapNY; this.velocity.y = 0; }
                         else if (this.velocity.y < 0) {
-                            this.position.y += overlapNY;
+                            this.position.y += overlapPY;
                             this.velocity.y = 0;
                             this.onGround = true;
                         }
                     } else {
                         var overlapPZ = (bz + 1) - minZ;
                         var overlapNZ = maxZ - bz;
-                        if (this.velocity.z > 0) { this.position.z -= overlapPZ; this.velocity.z = 0; }
-                        else if (this.velocity.z < 0) { this.position.z += overlapNZ; this.velocity.z = 0; }
+                        if (this.velocity.z > 0) { this.position.z -= overlapNZ; this.velocity.z = 0; }
+                        else if (this.velocity.z < 0) { this.position.z += overlapPZ; this.velocity.z = 0; }
                     }
 
                     // Recalculate bounds after correction
