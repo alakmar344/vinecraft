@@ -3,7 +3,7 @@
 > **Ultra-realistic, browser-based voxel sandbox game — no install required.**
 > Run it on any device: desktop, laptop, tablet, or phone.
 
-[![Live Demo](https://img.shields.io/badge/play-online-brightgreen?style=for-the-badge)](https://alakmar344.github.io/vinecraft/)
+[![Live Demo](https://img.shields.io/badge/play-online-brightgreen?style=for-the-badge)](https://vinecraft.pages.dev)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
 ---
@@ -65,9 +65,9 @@ npx serve .
 php -S localhost:8080
 ```
 
-**Option 3 — Play online (GitHub Pages)**
+**Option 3 — Play online (live deployment)**
 
-Visit: **https://alakmar344.github.io/vinecraft/**
+Visit: **https://vinecraft.pages.dev**
 
 ---
 
