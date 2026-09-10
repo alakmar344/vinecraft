@@ -1,9 +1,9 @@
 # 🌿 Vinecraft
 
-> **Ultra-realistic, browser-based voxel sandbox game — no install required.**
+> **Ultra-realistic, browser-based voxel sandbox game — 100% local, no hosting, no install.**
 > Run it on any device: desktop, laptop, tablet, or phone.
 
-[![Live Demo](https://img.shields.io/badge/play-online-brightgreen?style=for-the-badge)](https://vinecraft.pages.dev)
+[![Runs locally](https://img.shields.io/badge/runs%20locally-%F0%9F%92%BB%20offline-green?style=for-the-badge)](#-quick-start-no-install)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
 
 ---
@@ -65,9 +65,9 @@ npx serve .
 php -S localhost:8080
 ```
 
-**Option 3 — Play online (live deployment)**
+**Option 3 — Run it your way (fully offline)**
 
-Visit: **https://vinecraft.pages.dev**
+Vinecraft has **no hosted demo** — and that's by design. The whole engine is a handful of static files with zero build step, zero server, and zero tracking. After Three.js is cached once, it runs completely offline. Clone it, serve it, own it: your world runs on your machine, forever.
 
 ---
 
